@@ -1296,6 +1296,11 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@luna-market-deployer/nft-checkout@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@luna-market-deployer/nft-checkout/-/nft-checkout-1.0.0.tgz#ea805f77da0e7e5aa5d71786a247e9a136c1495d"
+  integrity sha512-9GOfV4cuN4bE8dO2NgFnNxb2DzPwwnJEl24Vmf34ZM0iWSnoEdWbEhp9CAtum9dc2tuz6EX31sW6J62vhkj6mA==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -1313,11 +1318,6 @@
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.3.tgz#5405ee8e444ed212db44e79351f0c70a582aae25"
   integrity sha512-DetpxZw1fzPD5xUBrIAoplLChO2VB8DlL5Gg+I1IR9b2wPqYIca2WSUxL5g1vLeR4MsQq1NeWriXAVffV+U1Fw==
-
-"@sportigos/typescript-react-test@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@sportigos/typescript-react-test/-/typescript-react-test-1.0.0.tgz#53e552882bc9278eadc6e955aa9df1700c6d2f23"
-  integrity sha512-438krtlABuLiCEc7CZEPtFtHfO/3lQHfo9uaSXmXPbQADL65M99A5ysAPsbxV/J10dPzvXh+sK3YE2RvzvDxgg==
 
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"

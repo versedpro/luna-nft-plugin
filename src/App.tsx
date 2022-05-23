@@ -1,5 +1,5 @@
 import React from "react";
-import { Widget } from "@sportigos/typescript-react-test";
+import { Widget } from "@luna-market-deployer/nft-checkout";
 // import { Widget } from "./lib";
 import "./App.css";
 
