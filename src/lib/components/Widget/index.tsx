@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.css';
+// import './style.css';
 
 type ComponentProps = {
     bgimg?: string;
@@ -29,7 +29,19 @@ const Widget: React.FC<ComponentProps> = ({
     onMintNft,
 }): JSX.Element => {
     return (
-        <div className="container">
+        <div
+            style={{
+                width: '100%',
+                minHeight: 240,
+                maxHeight: 380,
+                boxSizing: 'border-box',
+                display: 'flex',
+                flexDirection: 'row',
+                textAlign: 'left',
+                padding: 8,
+                background: '#1d1d1d',
+            }}
+        >
             <div style={{ width: '40%', position: 'relative' }}>
                 <img src={bgimg} width="100%" height="100%" alt="" style={{ objectFit: 'cover' }} />
                 <div style={{ position: 'absolute', inset: 0 }}>
@@ -122,10 +134,38 @@ const Widget: React.FC<ComponentProps> = ({
                             </div>
                         </div>
                         <div style={{ marginTop: 24 }}>
-                            <button disabled={mintBtnDisabled} className="mint-nft_btn" onClick={onMintNft}>
+                            <button
+                                disabled={mintBtnDisabled}
+                                onClick={onMintNft}
+                                style={{
+                                    width: 156,
+                                    height: 34,
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    border: ' 1px solid white',
+                                    borderRadius: 4,
+                                    background: 'none',
+                                    color: 'white',
+                                    cursor: 'pointer',
+                                }}
+                            >
                                 MINT NFT
                             </button>
-                            <button className="connect-wallet_btn" onClick={onConnectWallet}>
+                            <button
+                                onClick={onConnectWallet}
+                                style={{
+                                    width: 156,
+                                    height: 34,
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    border: ' 1px solid white',
+                                    borderRadius: 4,
+                                    background: 'none',
+                                    color: 'white',
+                                    cursor: 'pointer',
+                                    marginLeft: 16,
+                                }}
+                            >
                                 CONNECT WALLET
                             </button>
                         </div>
@@ -134,11 +174,38 @@ const Widget: React.FC<ComponentProps> = ({
             </div>
             <div style={{ width: '30%', display: 'flex', flexDirection: 'column', marginLeft: 48 }}>
                 <p style={{ fontSize: 12, fontWeight: 400, color: '#9E9E9E' }}>Question 1</p>
-                <p className="question"></p>
+                <p
+                    style={{
+                        width: '60%',
+                        height: 40,
+                        background: '#252525',
+                        borderColor: 'transparent',
+                        borderRadius: 4,
+                        marginTop: 0,
+                    }}
+                ></p>
                 <p style={{ fontSize: 12, fontWeight: 400, color: '#9E9E9E' }}>Question 2</p>
-                <p className="question"></p>
+                <p
+                    style={{
+                        width: '60%',
+                        height: 40,
+                        background: '#252525',
+                        borderColor: 'transparent',
+                        borderRadius: 4,
+                        marginTop: 0,
+                    }}
+                ></p>
                 <p style={{ fontSize: 12, fontWeight: 400, color: '#9E9E9E' }}>Question 3</p>
-                <p className="question question3"></p>
+                <p
+                    style={{
+                        width: '60%',
+                        height: 100,
+                        background: '#252525',
+                        borderColor: 'transparent',
+                        borderRadius: 4,
+                        marginTop: 0,
+                    }}
+                ></p>
             </div>
         </div>
     );
