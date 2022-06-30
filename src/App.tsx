@@ -8,7 +8,7 @@ function App() {
         <div className="App">
             <Widget
                 nftImgUrl="/assets/background.png"
-                collectionImgUrl="/assets/curry-logo.png"
+                collectionImgUrl="/assets/cyberkongz.png"
                 lunaLogo="/assets/luna-logo.svg"
                 collectionTitle="Curry Brand - Into the Metaverse"
                 nftTitle="Into The Metaverse"
@@ -16,7 +16,11 @@ function App() {
                 price={0.08}
                 mintsRemain={10000}
                 mintBtnDisabled={true}
-                questions={['question1', 'question2', 'question3']}
+                questions={[
+                    'question1question1question1question1question1question1question1question1question1question1',
+                    'question2question2question2question2question2question2',
+                    'question3question3question3question3question3question3question3question3question3question3',
+                ]}
             />
         </div>
     );

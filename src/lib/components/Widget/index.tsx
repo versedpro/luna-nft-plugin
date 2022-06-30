@@ -82,7 +82,7 @@ const Widget: React.FC<ComponentProps> = ({
                                 alignItems: 'center',
                             }}
                         >
-                            <img src={collectionImgUrl} width={40} height={40} alt="" />
+                            <img src={collectionImgUrl} width={40} height={40} style={{ borderRadius: 100 }} alt="" />
                             <p style={{ fontSize: 20, color: 'white', marginLeft: 16 }}>{collectionTitle}</p>
                         </div>
                         <div
@@ -179,9 +179,8 @@ const Widget: React.FC<ComponentProps> = ({
                 <p
                     style={{
                         width: '60%',
-                        height: 40,
-                        lineHeight: '40px',
-                        padding: '0 16px',
+                        padding: '16px',
+                        wordBreak: 'break-all',
                         color: 'white',
                         background: '#252525',
                         borderColor: 'transparent',
@@ -195,9 +194,8 @@ const Widget: React.FC<ComponentProps> = ({
                 <p
                     style={{
                         width: '60%',
-                        height: 40,
-                        lineHeight: '40px',
-                        padding: '0 16px',
+                        padding: '16px',
+                        wordBreak: 'break-all',
                         color: 'white',
                         background: '#252525',
                         borderColor: 'transparent',
@@ -211,8 +209,8 @@ const Widget: React.FC<ComponentProps> = ({
                 <p
                     style={{
                         width: '60%',
-                        height: 100,
                         padding: '16px',
+                        wordBreak: 'break-all',
                         color: 'white',
                         background: '#252525',
                         borderColor: 'transparent',
