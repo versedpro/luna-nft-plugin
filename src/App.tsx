@@ -7,8 +7,8 @@ function App() {
     return (
         <div className="App">
             <Widget
-                bgimg="/assets/background.png"
-                curryLogo="/assets/curry-logo.png"
+                nftImgUrl="/assets/background.png"
+                collectionImgUrl="/assets/curry-logo.png"
                 lunaLogo="/assets/luna-logo.svg"
                 collectionTitle="Curry Brand - Into the Metaverse"
                 nftTitle="Into The Metaverse"
@@ -16,6 +16,7 @@ function App() {
                 price={0.08}
                 mintsRemain={10000}
                 mintBtnDisabled={true}
+                questions={['question1', 'question2', 'question3']}
             />
         </div>
     );
