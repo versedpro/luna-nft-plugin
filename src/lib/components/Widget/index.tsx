@@ -16,6 +16,7 @@ type ComponentProps = {
     socialLinks: { [key: string]: boolean };
     onConnectWallet?: () => void;
     onMintNft?: () => void;
+    className?: string;
 };
 
 const Widget: React.FC<ComponentProps> = ({
@@ -32,6 +33,7 @@ const Widget: React.FC<ComponentProps> = ({
     socialLinks,
     onConnectWallet,
     onMintNft,
+    className = '',
 }): JSX.Element => {
     return (
         <div
@@ -46,6 +48,7 @@ const Widget: React.FC<ComponentProps> = ({
                 padding: 8,
                 background: '#1d1d1d',
             }}
+            className={className}
         >
             <div style={{ width: '40%', position: 'relative' }}>
                 <img src={nftImgUrl} width="100%" height="100%" alt="" style={{ objectFit: 'cover' }} />
@@ -154,7 +157,7 @@ const Widget: React.FC<ComponentProps> = ({
                                 <p style={{ fontWeight: 600 }}>{mintsRemain}</p>
                             </div>
                         </div>
-                        <div style={{ marginTop: 24 }}>
+                        <div style={{ marginTop: 24 }} className="btn-box">
                             <button
                                 disabled={mintBtnDisabled}
                                 onClick={onMintNft}
@@ -163,12 +166,13 @@ const Widget: React.FC<ComponentProps> = ({
                                     height: 34,
                                     fontSize: 14,
                                     fontWeight: 400,
-                                    border: ' 1px solid white',
+                                    // border: ' 1px solid white',
                                     borderRadius: 4,
-                                    background: 'none',
-                                    color: 'white',
-                                    cursor: 'pointer',
+                                    // background: 'none',
+                                    // color: 'white',
+                                    // cursor: 'pointer',
                                 }}
+                                className="mint-nft_btn"
                             >
                                 MINT NFT
                             </button>
@@ -186,6 +190,7 @@ const Widget: React.FC<ComponentProps> = ({
                                     cursor: 'pointer',
                                     marginLeft: 16,
                                 }}
+                                className="connect-wallet_btn"
                             >
                                 CONNECT WALLET
                             </button>
