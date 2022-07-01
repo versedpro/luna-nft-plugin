@@ -18,8 +18,8 @@ function App() {
                 mintBtnDisabled={true}
                 questions={[
                     'question1question1question1question1question1question1question1question1question1question1',
-                    'question2question2question2question2question2question2',
-                    'question3question3question3question3question3question3question3question3question3question3',
+                    // 'question2question2question2question2question2question2',
+                    // 'question3question3question3question3question3question3question3question3question3question3',
                 ]}
             />
         </div>
