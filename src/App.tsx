@@ -21,6 +21,7 @@ function App() {
                     // 'question2question2question2question2question2question2',
                     // 'question3question3question3question3question3question3question3question3question3question3',
                 ]}
+                socialLinks={{ twitter: true, discord: true, facebook: true, instagram: true }}
             />
         </div>
     );

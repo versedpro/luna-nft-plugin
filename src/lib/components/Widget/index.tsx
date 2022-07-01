@@ -1,5 +1,6 @@
 import React from 'react';
 // import './style.css';
+import { Icon } from '@iconify/react';
 
 type ComponentProps = {
     nftImgUrl?: string;
@@ -12,6 +13,7 @@ type ComponentProps = {
     mintsRemain: number;
     mintBtnDisabled: boolean;
     questions: string[];
+    socialLinks: { [key: string]: boolean };
     onConnectWallet?: () => void;
     onMintNft?: () => void;
 };
@@ -27,6 +29,7 @@ const Widget: React.FC<ComponentProps> = ({
     mintsRemain,
     mintBtnDisabled,
     questions,
+    socialLinks,
     onConnectWallet,
     onMintNft,
 }): JSX.Element => {
@@ -91,7 +94,23 @@ const Widget: React.FC<ComponentProps> = ({
                                 flexDirection: 'row',
                                 alignItems: 'center',
                             }}
-                        ></div>
+                        >
+                            {socialLinks['twitter'] && <Icon icon="mdi:twitter" fontSize={24} color="white" />}
+                            {socialLinks['discord'] && (
+                                <Icon
+                                    icon="ic:baseline-discord"
+                                    fontSize={24}
+                                    color="white"
+                                    style={{ marginLeft: 20 }}
+                                />
+                            )}
+                            {socialLinks['facebook'] && (
+                                <Icon icon="gg:facebook" fontSize={24} color="white" style={{ marginLeft: 18 }} />
+                            )}
+                            {socialLinks['instagram'] && (
+                                <Icon icon="mdi:instagram" fontSize={24} color="white" style={{ marginLeft: 18 }} />
+                            )}
+                        </div>
                     </div>
                     <div
                         style={{
