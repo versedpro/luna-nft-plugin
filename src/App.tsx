@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import { Widget } from "@luna-market-deployer/nft-checkout";
 import { Widget } from './lib';
 import './App.css';
 
 function App() {
+    const [nftCount, setNftCount] = useState<string>('');
+
+    const onNftCountChange = (value: string) => {
+        if (!isNaN(Number(value))) {
+            setNftCount(value);
+        }
+    };
+
     return (
         <div className="App">
             <Widget
@@ -22,6 +30,9 @@ function App() {
                     // 'question3question3question3question3question3question3question3question3question3question3',
                 ]}
                 socialLinks={{ twitter: true, discord: true, facebook: true, instagram: true }}
+                nftCount={nftCount}
+                // onNftCountChange={setNftCount}
+                onNftCountChange={onNftCountChange}
             />
         </div>
     );
