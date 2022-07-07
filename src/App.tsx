@@ -5,11 +5,18 @@ import './App.css';
 
 function App() {
     const [nftCount, setNftCount] = useState<string>('');
+    const [answers, setAnswers] = useState<string[]>(['', '', '']);
 
     const onNftCountChange = (value: string) => {
         if (!isNaN(Number(value))) {
             setNftCount(value);
         }
+    };
+
+    const onAnswersChange = (index: number, value: string) => {
+        let updatedAnswers = [...answers];
+        updatedAnswers[index] = value;
+        setAnswers(updatedAnswers);
     };
 
     return (
@@ -24,15 +31,13 @@ function App() {
                 price={0.08}
                 mintsRemain={10000}
                 mintBtnDisabled={true}
-                questions={[
-                    'question1question1question1question1question1question1question1question1question1question1',
-                    // 'question2question2question2question2question2question2',
-                    // 'question3question3question3question3question3question3question3question3question3question3',
-                ]}
+                questions={['Question 1', 'Question 2', 'Question 3']}
                 socialLinks={{ twitter: true, discord: true, facebook: true, instagram: true }}
                 nftCount={nftCount}
                 // onNftCountChange={setNftCount}
                 onNftCountChange={onNftCountChange}
+                answers={answers}
+                onAnswersChange={onAnswersChange}
             />
         </div>
     );
