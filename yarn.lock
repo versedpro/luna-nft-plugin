@@ -1811,10 +1811,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@sportigos/nft-checkout@^1.0.22":
-  version "1.0.22"
-  resolved "https://registry.yarnpkg.com/@sportigos/nft-checkout/-/nft-checkout-1.0.22.tgz#45482f8cfca9c9f3c85e20c493c85b7d3429062f"
-  integrity sha512-Tc5ErKzLJETYg6V1lPgJVu7IJ5PChEvlRpqZqHW2E0o098Gj68PSd8E1sr1c0fdaIfzc1dvJPQ8R04gM6NmMfw==
+"@sportigos/nft-checkout@^1.0.29":
+  version "1.0.29"
+  resolved "https://registry.yarnpkg.com/@sportigos/nft-checkout/-/nft-checkout-1.0.29.tgz#4f2e49c217ad084f72083e9096cae36af1f6fa29"
+  integrity sha512-mjuCClnYn3l31AUH4RzS8m4ETNthY5S4CB2eVyuFWeN6zCilL/1+3n7sri9TNBZLVv2MWb9v1/9/IMUa7k7UjQ==
   dependencies:
     "@iconify/react" "^3.2.2"
     axios "^0.27.2"
@@ -11703,7 +11703,7 @@ use@^3.1.0:
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
-  integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
+  integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
 util.promisify@1.0.0:
   version "1.0.0"
