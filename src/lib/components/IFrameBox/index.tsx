@@ -2,7 +2,7 @@ import React from 'react';
 // import './style.css';
 import { Icon } from '@iconify/react';
 // import { getMintInfo } from '../../api/mint';
-import LunaLogo from '../../assets/luna-logo.svg';
+import LunaLogo from '../../assets/LunaLogo';
 
 type ComponentProps = {
     nftImgUrl?: string;
@@ -145,7 +145,8 @@ const IFrameBox: React.FC<ComponentProps> = ({
                         }}
                     >
                         <p style={{ fontSize: 14, color: 'white', margin: 0 }}>Powered by</p>
-                        <img src={LunaLogo} width={16} height={16} alt="" style={{ marginLeft: 6 }} />
+                        {/* <img src={LunaLogo} width={16} height={16} alt="" style={{ marginLeft: 6 }} /> */}
+                        <LunaLogo style={{ marginLeft: 6 }} />
                     </div>
                 </div>
             </div>

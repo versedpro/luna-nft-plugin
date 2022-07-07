@@ -1811,6 +1811,14 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@sportigos/nft-checkout@^1.0.21":
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/@sportigos/nft-checkout/-/nft-checkout-1.0.21.tgz#c8944d8ee1da13666e8eeed939a5f58422016113"
+  integrity sha512-GUc3cpqmwDHcQNx5Xutn2H4fFWOgmvh3kquV4rW0aN3kPATCEY0+QDajr7mw0MzdvTGONynN6Z/eyBee/kptxA==
+  dependencies:
+    "@iconify/react" "^3.2.2"
+    axios "^0.27.2"
+
 "@surma/rollup-plugin-off-main-thread@^1.1.1":
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/@surma/rollup-plugin-off-main-thread/-/rollup-plugin-off-main-thread-1.4.2.tgz#e6786b6af5799f82f7ab3a82e53f6182d2b91a58"
