@@ -1811,10 +1811,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@sportigos/nft-checkout@^1.0.21":
-  version "1.0.21"
-  resolved "https://registry.yarnpkg.com/@sportigos/nft-checkout/-/nft-checkout-1.0.21.tgz#c8944d8ee1da13666e8eeed939a5f58422016113"
-  integrity sha512-GUc3cpqmwDHcQNx5Xutn2H4fFWOgmvh3kquV4rW0aN3kPATCEY0+QDajr7mw0MzdvTGONynN6Z/eyBee/kptxA==
+"@sportigos/nft-checkout@^1.0.22":
+  version "1.0.22"
+  resolved "https://registry.yarnpkg.com/@sportigos/nft-checkout/-/nft-checkout-1.0.22.tgz#45482f8cfca9c9f3c85e20c493c85b7d3429062f"
+  integrity sha512-Tc5ErKzLJETYg6V1lPgJVu7IJ5PChEvlRpqZqHW2E0o098Gj68PSd8E1sr1c0fdaIfzc1dvJPQ8R04gM6NmMfw==
   dependencies:
     "@iconify/react" "^3.2.2"
     axios "^0.27.2"
