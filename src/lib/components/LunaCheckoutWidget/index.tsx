@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import IFrameBox from '../IFrameBox';
 import { getMintInfo } from '../../api/mint';
+import { useWeb3React } from '@web3-react/core';
+import { ethers } from 'ethers';
+import { testConnectors } from '../../../utils/connector';
+import { useContract } from '../../../utils/useContract';
+import NFT_ABI from '../../assets/abi/erc1155.json';
 
 type ComponentProps = {
     collectionId: string;
@@ -9,6 +14,7 @@ type ComponentProps = {
 };
 
 const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, password }): JSX.Element => {
+    const { account, activate, deactivate } = useWeb3React();
     const [mintInfo, setMintInfo] = useState<any>();
 
     const [twitterEnabled, setTwitterEnabled] = useState<boolean>(false);
@@ -48,6 +54,9 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
             });
     }, [collectionId, username, password]);
 
+    const contract = useContract(mintInfo?.contract_address, NFT_ABI);
+    // const contract = useContract('0xf7485edf11bfc4cb0a15a63302cc3a8cf6f98920', NFT_ABI);
+
     const onNftCountChange = (value: string) => {
         if (!isNaN(Number(value))) {
             setNftCount(value);
@@ -58,6 +67,29 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
         let updatedAnswers = [...answers];
         updatedAnswers[index] = value;
         setAnswers(updatedAnswers);
+    };
+
+    const handleConnectMetamask = () => {
+        activate(testConnectors.injected);
+    };
+
+    const handleDisconnectMetamask = () => {
+        deactivate();
+    };
+
+    const handleMint = async () => {
+        console.log(contract);
+        if (contract) {
+            const res = await contract.mintPrice(1);
+            const mintPrice = parseFloat(ethers.utils.formatEther(res.toString()));
+            try {
+                await contract.mint(account, 1, parseInt(nftCount), {
+                    value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString()),
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        }
     };
 
     return (
@@ -83,6 +115,9 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
                     onNftCountChange={onNftCountChange}
                     answers={answers}
                     onAnswersChange={onAnswersChange}
+                    onConnectWallet={handleConnectMetamask}
+                    onDisconnectWallet={handleDisconnectMetamask}
+                    onMintNft={handleMint}
                 />
             )}
         </div>
