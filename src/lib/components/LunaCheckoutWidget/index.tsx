@@ -84,7 +84,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
             const mintPrice = parseFloat(ethers.utils.formatEther(res.toString()));
             try {
                 await contract.mint(account, 1, parseInt(nftCount), {
-                    value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString()),
+                    value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString())
                 });
             } catch (error) {
                 console.log(error);
@@ -109,7 +109,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
                         twitter: twitterEnabled,
                         discord: discordEnabled,
                         facebook: facebookEnabled,
-                        instagram: instagramEnabled,
+                        instagram: instagramEnabled
                     }}
                     nftCount={nftCount}
                     onNftCountChange={onNftCountChange}

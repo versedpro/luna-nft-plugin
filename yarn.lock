@@ -2209,13 +2209,18 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@sportigos/nft-checkout@^1.0.29":
-  version "1.0.29"
-  resolved "https://registry.yarnpkg.com/@sportigos/nft-checkout/-/nft-checkout-1.0.29.tgz#4f2e49c217ad084f72083e9096cae36af1f6fa29"
-  integrity sha512-mjuCClnYn3l31AUH4RzS8m4ETNthY5S4CB2eVyuFWeN6zCilL/1+3n7sri9TNBZLVv2MWb9v1/9/IMUa7k7UjQ==
+"@sportigos/nft-checkout@^1.0.31":
+  version "1.0.31"
+  resolved "https://registry.yarnpkg.com/@sportigos/nft-checkout/-/nft-checkout-1.0.31.tgz#4fe9f1b29372e2ef7b22604abc505c595e0fcc56"
+  integrity sha512-MooXILSdEIwFnNaxogCCJMMr0aTdGnpZ3Nhw1PilOLstigebreFV6HttItpNW6gPCKq5PcJ74NVNt3mwu7/kFQ==
   dependencies:
     "@iconify/react" "^3.2.2"
+    "@web3-react/core" "^6.1.9"
+    "@web3-react/injected-connector" "^6.0.7"
+    "@web3-react/walletconnect-connector" "^6.2.13"
+    "@web3-react/walletlink-connector" "^6.2.14"
     axios "^0.27.2"
+    ethers "^5.6.9"
 
 "@surma/rollup-plugin-off-main-thread@^1.1.1":
   version "1.4.2"
