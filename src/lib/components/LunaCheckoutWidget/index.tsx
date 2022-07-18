@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import IFrameBox from '../IFrameBox';
 import { getMintInfo } from '../../api/mint';
-import { useWeb3React } from '@web3-react/core';
+import { Web3ReactProvider, useWeb3React } from '@web3-react/core';
 import { ethers } from 'ethers';
-import { testConnectors } from '../../../utils/connector';
-import { useContract } from '../../../utils/useContract';
+import { testConnectors } from '../../utils/connector';
+import { useContract } from '../../utils/useContract';
 import NFT_ABI from '../../assets/abi/erc1155.json';
+
+const getLibrary = (provider: any): ethers.providers.Web3Provider => {
+    const library = new ethers.providers.Web3Provider(provider);
+    library.pollingInterval = 8000;
+    return library;
+};
 
 type ComponentProps = {
     collectionId: string;
@@ -14,13 +20,16 @@ type ComponentProps = {
 };
 
 const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, password }): JSX.Element => {
-    const { account, activate, deactivate } = useWeb3React();
+    const { account, activate, deactivate, active } = useWeb3React();
     const [mintInfo, setMintInfo] = useState<any>();
 
     const [twitterEnabled, setTwitterEnabled] = useState<boolean>(false);
     const [discordEnabled, setDiscordEnabled] = useState<boolean>(false);
     const [facebookEnabled, setFacebookEnabled] = useState<boolean>(false);
     const [instagramEnabled, setInstagramEnabled] = useState<boolean>(false);
+
+    const [mintPrice, setMintPrice] = useState<number>(0);
+    const [mintRemain, setMintRemain] = useState<number>(0);
 
     const [nftCount, setNftCount] = useState<string>('');
     const [answers, setAnswers] = useState<string[]>([]);
@@ -54,8 +63,19 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
             });
     }, [collectionId, username, password]);
 
+    async function getMintPrice() {
+        if (contract) {
+            const res = await contract.mintPrice(1);
+            const mintPrice = parseFloat(ethers.utils.formatEther(res.toString()));
+            setMintPrice(mintPrice);
+            setMintRemain(0);
+            console.log('mintPrice:', mintPrice);
+        }
+    }
+
     const contract = useContract(mintInfo?.contract_address, NFT_ABI);
     // const contract = useContract('0xf7485edf11bfc4cb0a15a63302cc3a8cf6f98920', NFT_ABI);
+    getMintPrice();
 
     const onNftCountChange = (value: string) => {
         if (!isNaN(Number(value))) {
@@ -80,8 +100,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
     const handleMint = async () => {
         console.log(contract);
         if (contract) {
-            const res = await contract.mintPrice(1);
-            const mintPrice = parseFloat(ethers.utils.formatEther(res.toString()));
+            console.log('mintPrice, nftCount:', mintPrice, nftCount);
             try {
                 await contract.mint(account, 1, parseInt(nftCount), {
                     value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString())
@@ -96,13 +115,14 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
         <div>
             {!!mintInfo && (
                 <IFrameBox
+                    active={active}
                     nftImgUrl={mintInfo.background_header}
                     collectionImgUrl={mintInfo.image}
                     collectionTitle={mintInfo.name}
                     nftTitle={mintInfo.name}
                     nftDescription={mintInfo.description}
-                    price={0.08}
-                    mintsRemain={10000}
+                    price={mintPrice}
+                    mintsRemain={mintRemain}
                     mintBtnDisabled={false}
                     questions={mintInfo.first_party_data.map((item: any) => item.question)}
                     socialLinks={{

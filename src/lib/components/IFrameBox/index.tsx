@@ -3,9 +3,10 @@ import React from 'react';
 import { Icon } from '@iconify/react';
 // import { getMintInfo } from '../../api/mint';
 import LunaLogo from '../../assets/LunaLogo';
-import { useWeb3React } from '@web3-react/core';
+// import { useWeb3React } from '@web3-react/core';
 
 type ComponentProps = {
+    active: boolean;
     nftImgUrl?: string;
     collectionImgUrl?: string;
     collectionTitle: string;
@@ -30,6 +31,7 @@ type ComponentProps = {
 };
 
 const IFrameBox: React.FC<ComponentProps> = ({
+    active,
     nftImgUrl,
     collectionImgUrl,
     collectionTitle,
@@ -61,7 +63,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
     //             console.log('getMintInfo error:', error);
     //         });
     // }, []);
-    const { active } = useWeb3React();
+    // const { active } = useWeb3React();
 
     return (
         <div>
@@ -185,7 +187,7 @@ const IFrameBox: React.FC<ComponentProps> = ({
                             placeholder="Number of NFT"
                             value={nftCount}
                             onChange={(event) => onNftCountChange(event.target.value)}
-                            style={{ width: '50%', borderRadius: 4 }}
+                            style={{ width: '50%', padding: '0 8px', borderRadius: 4 }}
                             className="number-of-nft__inut"
                         />
                         <button
