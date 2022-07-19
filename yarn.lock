@@ -2209,10 +2209,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@sportigos/nft-checkout@^1.0.34":
-  version "1.0.34"
-  resolved "https://registry.yarnpkg.com/@sportigos/nft-checkout/-/nft-checkout-1.0.34.tgz#5864be1978c0248db9dc1e285ef3ce611ef11c14"
-  integrity sha512-A48IejRqQl14D9s5oAaTh6fZ028Y4j9LiGN5aspK/UJ60jVfj74aMrSfSVna/EiTVPjrVEK+rOzche0qxKi3mw==
+"@sportigos/nft-checkout@^1.0.35":
+  version "1.0.35"
+  resolved "https://registry.yarnpkg.com/@sportigos/nft-checkout/-/nft-checkout-1.0.35.tgz#5e273751820154391e408d421300db6b906cd2c1"
+  integrity sha512-ExpaeSQaJVN4EmY9W+c/2Q4c4pIV5axv2qXxyn601VMTw3QsBBZ4rIVspJpBLr6kqULBpTiVZ3mY7IeSx2qmtA==
   dependencies:
     "@iconify/react" "^3.2.2"
     "@web3-react/core" "^6.1.9"
