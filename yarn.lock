@@ -2209,13 +2209,18 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@sportigos/nft-checkout@^1.0.29":
-  version "1.0.29"
-  resolved "https://registry.yarnpkg.com/@sportigos/nft-checkout/-/nft-checkout-1.0.29.tgz#4f2e49c217ad084f72083e9096cae36af1f6fa29"
-  integrity sha512-mjuCClnYn3l31AUH4RzS8m4ETNthY5S4CB2eVyuFWeN6zCilL/1+3n7sri9TNBZLVv2MWb9v1/9/IMUa7k7UjQ==
+"@sportigos/nft-checkout@^1.0.34":
+  version "1.0.34"
+  resolved "https://registry.yarnpkg.com/@sportigos/nft-checkout/-/nft-checkout-1.0.34.tgz#5864be1978c0248db9dc1e285ef3ce611ef11c14"
+  integrity sha512-A48IejRqQl14D9s5oAaTh6fZ028Y4j9LiGN5aspK/UJ60jVfj74aMrSfSVna/EiTVPjrVEK+rOzche0qxKi3mw==
   dependencies:
     "@iconify/react" "^3.2.2"
+    "@web3-react/core" "^6.1.9"
+    "@web3-react/injected-connector" "^6.0.7"
+    "@web3-react/walletconnect-connector" "^6.2.13"
+    "@web3-react/walletlink-connector" "^6.2.14"
     axios "^0.27.2"
+    ethers "^5.6.9"
 
 "@surma/rollup-plugin-off-main-thread@^1.1.1":
   version "1.4.2"
@@ -9201,6 +9206,19 @@ next-tick@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
+
+nft-checkout@^1.0.30:
+  version "1.0.30"
+  resolved "https://registry.yarnpkg.com/nft-checkout/-/nft-checkout-1.0.30.tgz#239b7369986d62be1c4f88fb542418eaa9374423"
+  integrity sha512-PYEt4/nOg78sVe4EO0ymupR4j2+QHqvvbnsa5IuguoGaLcOexBsWLXqaL8iWE7964dFK3fzkZveDg3XWO7QGyQ==
+  dependencies:
+    "@iconify/react" "^3.2.2"
+    "@web3-react/core" "^6.1.9"
+    "@web3-react/injected-connector" "^6.0.7"
+    "@web3-react/walletconnect-connector" "^6.2.13"
+    "@web3-react/walletlink-connector" "^6.2.14"
+    axios "^0.27.2"
+    ethers "^5.6.9"
 
 nice-try@^1.0.4:
   version "1.0.5"

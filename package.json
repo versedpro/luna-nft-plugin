@@ -5,7 +5,7 @@
     "dependencies": {
         "@iconify/react": "^3.2.2",
         "@luna-market-deployer/nft-checkout": "^1.0.0",
-        "@sportigos/nft-checkout": "^1.0.29",
+        "@sportigos/nft-checkout": "^1.0.34",
         "@testing-library/jest-dom": "^5.11.4",
         "@testing-library/react": "^11.1.0",
         "@testing-library/user-event": "^12.1.10",
@@ -45,5 +45,7 @@
             "last 1 safari version"
         ]
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "nft-checkout": "^1.0.30"
+    }
 }

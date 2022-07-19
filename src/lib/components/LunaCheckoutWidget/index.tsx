@@ -14,7 +14,7 @@ type ComponentProps = {
 };
 
 const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, password }): JSX.Element => {
-    const { account, activate, deactivate } = useWeb3React();
+    const { account, activate, deactivate, active } = useWeb3React();
     const [mintInfo, setMintInfo] = useState<any>();
 
     const [twitterEnabled, setTwitterEnabled] = useState<boolean>(false);
@@ -54,8 +54,32 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
             });
     }, [collectionId, username, password]);
 
+    async function getTokenInfo() {
+        if (contract) {
+            const resMintPrice = await contract.mintPrice(1);
+            const mintPrice = parseFloat(ethers.utils.formatEther(resMintPrice.toString()));
+
+            const tokenBalance = await contract.balanceForTokenId(1);
+
+            const maxSupply = await contract.maxSupply(1);
+
+            const mintRemaining = maxSupply ? maxSupply - tokenBalance : undefined;
+
+            console.log(
+                parseInt(ethers.utils.formatEther(tokenBalance.toString())),
+                parseInt(maxSupply.toString()),
+                mintRemaining
+            );
+
+            // setMintPrice(mintPrice);
+            // setMintRemain(mintRemaining);
+            console.log('mintPrice:', mintPrice);
+        }
+    }
+
     const contract = useContract(mintInfo?.contract_address, NFT_ABI);
     // const contract = useContract('0xf7485edf11bfc4cb0a15a63302cc3a8cf6f98920', NFT_ABI);
+    getTokenInfo();
 
     const onNftCountChange = (value: string) => {
         if (!isNaN(Number(value))) {
@@ -96,6 +120,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
         <div>
             {!!mintInfo && (
                 <IFrameBox
+                    active={active}
                     nftImgUrl={mintInfo.background_header}
                     collectionImgUrl={mintInfo.image}
                     collectionTitle={mintInfo.name}

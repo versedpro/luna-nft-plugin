@@ -1,6 +1,7 @@
 import React from 'react';
-// import { LunaCheckoutWidget } from '@sportigos/nft-checkout';
-import { LunaCheckoutWidget } from './lib';
+import { LunaCheckoutWidget } from '@sportigos/nft-checkout';
+// import { LunaCheckoutWidget } from './lib';
+// import { LunaCheckoutWidget } from 'nft-checkout';
 import './App.css';
 
 function App() {
