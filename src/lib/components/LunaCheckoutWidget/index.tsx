@@ -4,7 +4,6 @@ import { getMintInfo, answerMintQuestions } from '../../api/mint';
 import { Web3ReactProvider, useWeb3React } from '@web3-react/core';
 import { ethers } from 'ethers';
 import { testConnectors } from '../../utils/connector';
-// import { useContract } from '../../utils/useContract';
 import NFT_ABI from '../../assets/abi/erc1155.json';
 import { FirstPartyAnswers } from '../../type';
 import { getContract } from '../../utils';
@@ -34,12 +33,15 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
     const [contract, setContract] = useState<Contract>();
 
     const [mintPrice, setMintPrice] = useState<number>(0);
+    const [maxSupply, setMaxSupply] = useState<number>(0);
     const [mintRemain, setMintRemain] = useState<number | undefined>();
 
     const [nftCount, setNftCount] = useState<string>('');
     const [nftCountError, setNftCountError] = useState<boolean>(false);
     const [answers, setAnswers] = useState<string[]>([]);
     const [answersError, setAnswersError] = useState<boolean[]>([false, false, false]);
+    const [mintProcessing, setMintProcessing] = useState<boolean>(false);
+    const [mintSucceed, setMintSucceed] = useState<boolean>(false);
 
     useEffect(() => {
         getMintInfo(collectionId, username, password)
@@ -88,10 +90,6 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
         setContract(contract);
     }, [mintInfo, library, chainId, account]);
 
-    // const contract = useContract(mintInfo?.contract_address, NFT_ABI);
-    // const contract = useContract('0xf7485edf11bfc4cb0a15a63302cc3a8cf6f98920', NFT_ABI);
-    // getTokenInfo();
-
     useEffect(() => {
         async function getTokenInfo() {
             if (contract) {
@@ -107,6 +105,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
                 const mintRemaining = maxSupplyReadable ? maxSupplyReadable - tokenBalanceReadable : undefined;
 
                 setMintPrice(mintPrice);
+                setMaxSupply(maxSupplyReadable);
                 setMintRemain(mintRemaining);
                 console.log('mintPrice:', mintPrice);
             }
@@ -124,9 +123,24 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
         let updatedAnswers = [...answers];
         updatedAnswers[index] = value;
         setAnswers(updatedAnswers);
+
+        let updatedAnswersError = [...answersError];
+        updatedAnswersError[index] = false;
+        setAnswersError(updatedAnswersError);
     };
 
-    const handleConnectMetamask = () => {
+    const handleConnectMetamask = async () => {
+        const w: any = window;
+
+        await w.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [
+                {
+                    chainId: '0x4'
+                }
+            ]
+        });
+
         activate(testConnectors.injected);
     };
 
@@ -148,11 +162,14 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
             setAnswersError(errors);
 
             if (!!nftCount && errors[0] === false && errors[1] === false && errors[2] === false) {
+                setMintProcessing(true);
                 try {
-                    await contract.mint(account, 1, parseInt(nftCount), {
+                    const tx = await contract.mint(account, 1, parseInt(nftCount), {
                         value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString())
                     });
+                    await tx.wait();
                     console.log('mint success!');
+                    setMintSucceed(true);
 
                     setMintRemain(mintRemain ? mintRemain - parseInt(nftCount) : undefined);
 
@@ -162,6 +179,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
                 } catch (error) {
                     console.log(error);
                 }
+                setMintProcessing(false);
             }
         }
     };
@@ -188,37 +206,43 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({ collectionId, username, 
     };
 
     return (
-        <div>
-            {!!mintInfo && (
-                <IFrameBox
-                    active={active}
-                    nftImgUrl={mintInfo.background_header}
-                    collectionImgUrl={mintInfo.image}
-                    collectionTitle={mintInfo.name}
-                    nftTitle={mintInfo.name}
-                    nftDescription={mintInfo.description}
-                    price={mintPrice}
-                    mintsRemain={mintRemain}
-                    mintBtnDisabled={false}
-                    questions={mintInfo.first_party_data.map((item: any) => item.question)}
-                    socialLinks={{
-                        twitter: twitterEnabled,
-                        discord: discordEnabled,
-                        facebook: facebookEnabled,
-                        instagram: instagramEnabled
-                    }}
-                    nftCount={nftCount}
-                    nftCountError={nftCountError}
-                    onNftCountChange={onNftCountChange}
-                    answers={answers}
-                    answersError={answersError}
-                    onAnswersChange={onAnswersChange}
-                    onConnectWallet={handleConnectMetamask}
-                    onDisconnectWallet={handleDisconnectMetamask}
-                    onMintNft={handleMint}
-                />
-            )}
-        </div>
+        <Web3ReactProvider getLibrary={getLibrary}>
+            <div>
+                {!!mintInfo && (
+                    <IFrameBox
+                        active={active}
+                        nftImgUrl={mintInfo.background_header}
+                        nftTitle={mintInfo.name}
+                        nftDescription={mintInfo.description}
+                        projectAbout={mintInfo.about}
+                        price={mintPrice}
+                        maxSupply={maxSupply}
+                        mintsRemain={mintRemain}
+                        mintBtnDisabled={false}
+                        bgColor={mintInfo.checkout_background_color}
+                        questions={mintInfo.first_party_data.map((item: any) => item.question)}
+                        socialLinks={{
+                            twitter: twitterEnabled,
+                            discord: discordEnabled,
+                            facebook: facebookEnabled,
+                            instagram: instagramEnabled
+                        }}
+                        nftCount={nftCount}
+                        nftCountError={nftCountError}
+                        onNftCountChange={onNftCountChange}
+                        answers={answers}
+                        answersError={answersError}
+                        onAnswersChange={onAnswersChange}
+                        onConnectWallet={handleConnectMetamask}
+                        onDisconnectWallet={handleDisconnectMetamask}
+                        onMintNft={handleMint}
+                        mintProcessing={mintProcessing}
+                        mintSucceed={mintSucceed}
+                        setMintSucceed={setMintSucceed}
+                    />
+                )}
+            </div>
+        </Web3ReactProvider>
     );
 };
 
