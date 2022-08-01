@@ -1,6 +1,7 @@
 import React from 'react';
 // import { LunaCheckoutWidget } from '@sportigos/nft-checkout';
-import { LunaCheckoutWidget } from 'nft-checkout';
+import { LunaCheckoutWidget } from 'luna-nft-checkout';
+import 'luna-nft-checkout/lib/esm/styles/IFrameBox.css';
 // import { LunaCheckoutWidget } from './lib';
 import './App.css';
 
@@ -49,9 +50,9 @@ function App() {
                 <button onClick={onUpdate}>Update</button>
             </div> */}
             <LunaCheckoutWidget
-                collectionId="e6f3c13f-b632-43e9-8351-6663b0dd555e"
-                username="NO6GCvlc892yL0sQlHqmA"
-                password="3kWcTwf8Q6J4kSCE9BCAk3pFlOTsQrxM"
+                collectionId="de65ccdd-e38a-4eb0-b619-08308659c960"
+                username="kuLCE6tVLjVY4o0vkN4Pt"
+                password="ukwIQKWQheFhFk9eeI8RIr8cUfjlamWT"
             />
         </div>
     );

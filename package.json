@@ -19,6 +19,7 @@
         "@web3-react/walletlink-connector": "^6.2.14",
         "axios": "^0.27.2",
         "ethers": "^5.6.9",
+        "luna-nft-checkout": "^1.0.0",
         "nft-checkout": "^1.4.23",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
