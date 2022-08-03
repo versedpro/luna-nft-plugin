@@ -1,9 +1,23 @@
 import React from 'react';
 // import { LunaCheckoutWidget } from '@sportigos/nft-checkout';
-import { LunaCheckoutWidget } from 'luna-nft-checkout';
+// import { LunaCheckoutWidget } from 'luna-nft-checkout';
 import 'luna-nft-checkout/lib/esm/styles/IFrameBox.css';
-// import { LunaCheckoutWidget } from './lib';
+import { LunaCheckoutWidget } from './lib';
+import Web3 from 'web3';
 import './App.css';
+
+import { Web3ReactProvider, useWeb3React } from '@web3-react/core';
+import { ethers } from 'ethers';
+
+// const getLibrary = (provider: any): ethers.providers.Web3Provider => {
+//     const library = new ethers.providers.Web3Provider(provider);
+//     library.pollingInterval = 8000;
+//     return library;
+// };
+
+function getLibrary(provider: any) {
+    return new Web3(provider);
+}
 
 function App() {
     // const [collectionId, setCollectionId] = useState<string>('c2c439fd-ed51-456b-b110-a12c577454b2');
@@ -21,8 +35,9 @@ function App() {
     // };
 
     return (
-        <div className="App">
-            {/* <div style={{ display: 'flex', flexDirection: 'row', gap: 12, margin: '12px 0' }}>
+        <Web3ReactProvider getLibrary={getLibrary}>
+            <div className="App">
+                {/* <div style={{ display: 'flex', flexDirection: 'row', gap: 12, margin: '12px 0' }}>
                 <div>
                     <span>CollectionID: </span>
                     <input
@@ -49,12 +64,14 @@ function App() {
                 </div>
                 <button onClick={onUpdate}>Update</button>
             </div> */}
-            <LunaCheckoutWidget
-                collectionId="de65ccdd-e38a-4eb0-b619-08308659c960"
-                username="kuLCE6tVLjVY4o0vkN4Pt"
-                password="ukwIQKWQheFhFk9eeI8RIr8cUfjlamWT"
-            />
-        </div>
+                <LunaCheckoutWidget
+                    collectionId="de65ccdd-e38a-4eb0-b619-08308659c960"
+                    username="kuLCE6tVLjVY4o0vkN4Pt"
+                    password="ukwIQKWQheFhFk9eeI8RIr8cUfjlamWT"
+                    libraryType="web3"
+                />
+            </div>
+        </Web3ReactProvider>
     );
 }
 
