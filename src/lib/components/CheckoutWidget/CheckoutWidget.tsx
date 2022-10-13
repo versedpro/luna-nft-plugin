@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import IFrameBox from '../IFrameBox';
+import DetailBox from '../DetailBox';
 import { getMintInfo, answerMintQuestions } from '../../api/mint';
-import { Web3ReactProvider, useWeb3React } from '@web3-react/core';
+import { useWeb3React } from '@web3-react/core';
 import { ethers } from 'ethers';
 import { testConnectors } from '../../utils/connector';
 import NFT_ABI from '../../assets/abi/erc1155.json';
 import { FirstPartyAnswers } from '../../type';
 import { getContract } from '../../utils';
 import { Contract } from '@ethersproject/contracts';
-
-const getLibrary = (provider: any): ethers.providers.Web3Provider => {
-  const library = new ethers.providers.Web3Provider(provider);
-  library.pollingInterval = 8000;
-  return library;
-};
+// import WebFont from 'webfontloader';
 
 const libraries = {
   WEB3: 'web3',
@@ -24,17 +19,10 @@ type Library = typeof libraries[keyof typeof libraries];
 
 type ComponentProps = {
   collectionId: string;
-  username: string;
-  password: string;
   libraryType: Library;
 };
 
-const LunaCheckoutWidget: React.FC<ComponentProps> = ({
-  collectionId,
-  username,
-  password,
-  libraryType
-}): JSX.Element => {
+const CheckoutWidget: React.FC<ComponentProps> = ({ collectionId, libraryType }): JSX.Element => {
   const { account, activate, deactivate, active, library, chainId } = useWeb3React();
   const [mintInfo, setMintInfo] = useState<any>();
 
@@ -56,8 +44,18 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
   const [mintProcessing, setMintProcessing] = useState<boolean>(false);
   const [mintSucceed, setMintSucceed] = useState<boolean>(false);
 
+  const [termsProcess, setTermsProcess] = useState<boolean>(false);
+
+  // useEffect(() => {
+  //   WebFont.load({
+  //     google: {
+  //       families: ['Roboto', 'Mouse Memoirs', 'Chilanka', 'Uchen']
+  //     }
+  //   });
+  // }, []);
+
   useEffect(() => {
-    getMintInfo(collectionId, username, password)
+    getMintInfo(collectionId)
       .then(async (response: any) => {
         console.log('getMintInfo response:', response);
         setMintInfo(response);
@@ -75,7 +73,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
         setInstagramEnabled(instagramObj ? instagramObj.enabled : false);
       })
       .catch((error) => {
-        console.log('getMintInfo error:', error);
+        console.warn('getMintInfo error:', error);
         setMintInfo(null);
 
         setTwitterEnabled(false);
@@ -83,10 +81,9 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
         setFacebookEnabled(false);
         setInstagramEnabled(false);
       });
-  }, [collectionId, username, password]);
+  }, [collectionId]);
 
   useEffect(() => {
-    console.log(library);
     const get = () => {
       if (!mintInfo?.contract_address || !NFT_ABI || !library || !chainId) return undefined;
       let address: string | undefined;
@@ -132,7 +129,6 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
         setMintPrice(mintPrice);
         setMaxSupply(maxSupplyReadable);
         setMintRemain(mintRemaining);
-        console.log('mintPrice:', mintPrice);
       }
     }
     getTokenInfo();
@@ -141,6 +137,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
   const onNftCountChange = (value: string) => {
     if (!isNaN(Number(value))) {
       setNftCount(value);
+      setNftCountError(!value);
     }
   };
 
@@ -161,7 +158,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
       method: 'wallet_switchEthereumChain',
       params: [
         {
-          chainId: '0x4'
+          chainId: mintInfo.chain === 'ethereum' ? '0x4' : '0x13881'
         }
       ]
     });
@@ -173,46 +170,49 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
     deactivate();
   };
 
+  const handleCancelTerms = () => {
+    setTermsProcess(false);
+  };
+
+  const handleMintBtn = async (termsProcess: boolean) => {
+    setNftCountError(!nftCount);
+
+    let errors = [...answersError];
+    for (let i = 0; i < mintInfo.first_party_data.length; i++) {
+      errors[i] = !answers[i];
+    }
+    setAnswersError(errors);
+
+    if (nftCount) setTermsProcess(termsProcess);
+  };
+
   const handleMint = async () => {
-    console.log(contract);
     if (contract) {
-      console.log('mintPrice, nftCount:', mintPrice, nftCount);
-
-      setNftCountError(!nftCount);
-
-      let errors = [...answersError];
-      for (let i = 0; i < mintInfo.first_party_data.length; i++) {
-        errors[i] = !answers[i];
-      }
-      setAnswersError(errors);
-
-      if (!!nftCount && errors[0] === false && errors[1] === false && errors[2] === false) {
-        setMintProcessing(true);
-        try {
-          if (libraryType === libraries.ETHERS) {
-            const tx = await contract.mint(account, 1, parseInt(nftCount), {
-              value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString())
-            });
-            await tx.wait();
-          } else {
-            await contract.methods.mint(account, 1, parseInt(nftCount)).send({
-              from: account,
-              value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString())
-            });
-          }
-          console.log('mint success!');
-          setMintSucceed(true);
-
-          setMintRemain(mintRemain ? mintRemain - parseInt(nftCount) : undefined);
-
-          if (mintInfo.first_party_data.length > 0) {
-            postAnswers();
-          }
-        } catch (error) {
-          console.log(error);
+      setMintProcessing(true);
+      try {
+        if (libraryType === libraries.ETHERS) {
+          const tx = await contract.mint(account, 1, parseInt(nftCount), {
+            value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString())
+          });
+          await tx.wait();
+        } else {
+          await contract.methods.mint(account, 1, parseInt(nftCount)).send({
+            from: account,
+            value: ethers.utils.parseEther((mintPrice * parseInt(nftCount)).toString())
+          });
         }
-        setMintProcessing(false);
+        console.log('mint success!');
+        setMintSucceed(true);
+
+        setMintRemain(mintRemain ? mintRemain - parseInt(nftCount) : undefined);
+
+        if (mintInfo.first_party_data.length > 0) {
+          postAnswers();
+        }
+      } catch (error) {
+        console.warn(error);
       }
+      setMintProcessing(false);
     }
   };
 
@@ -224,10 +224,7 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
         answer: answers[index]
       }));
 
-      console.log('account:', account);
-      console.log('firstPartyAnswers:', firstPartyAnswers);
-
-      answerMintQuestions(collectionId, account, firstPartyAnswers, username, password)
+      answerMintQuestions(collectionId, account, firstPartyAnswers)
         .then(async (response: any) => {
           console.log('answerMintQuestions response:', response);
         })
@@ -238,10 +235,9 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
   };
 
   return (
-    // <Web3ReactProvider getLibrary={getLibrary}>
     <div>
       {!!mintInfo && (
-        <IFrameBox
+        <DetailBox
           active={active}
           nftImgUrl={mintInfo.image}
           nftTitle={mintInfo.name}
@@ -252,6 +248,11 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
           mintsRemain={mintRemain}
           mintBtnDisabled={false}
           bgColor={mintInfo.checkout_background_color}
+          font={mintInfo.checkout_font}
+          fontColor={mintInfo.checkout_font_color}
+          tcLink={mintInfo.terms_and_condition_link}
+          termsProcess={termsProcess}
+          onCancelTerms={handleCancelTerms}
           questions={mintInfo.first_party_data.map((item: any) => item.question)}
           socialLinks={{
             twitter: twitterEnabled,
@@ -263,19 +264,21 @@ const LunaCheckoutWidget: React.FC<ComponentProps> = ({
           nftCountError={nftCountError}
           onNftCountChange={onNftCountChange}
           answers={answers}
+          setAnswers={setAnswers}
           answersError={answersError}
           onAnswersChange={onAnswersChange}
           onConnectWallet={handleConnectMetamask}
           onDisconnectWallet={handleDisconnectMetamask}
-          onMintNft={handleMint}
+          onMintNft={handleMintBtn}
+          onHandleMint={handleMint}
           mintProcessing={mintProcessing}
           mintSucceed={mintSucceed}
           setMintSucceed={setMintSucceed}
+          chain={mintInfo.chain}
         />
       )}
     </div>
-    // </Web3ReactProvider>
   );
 };
 
-export default LunaCheckoutWidget;
+export default CheckoutWidget;
