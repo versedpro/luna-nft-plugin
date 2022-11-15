@@ -1,4 +1,4 @@
-import LunaCheckoutWidget from './components/LunaCheckoutWidget';
-import IFrameBox from './components/IFrameBox';
+import CheckoutWidget from './components/CheckoutWidget/Web3Wrapper';
+import { NormalBox as DetailBox, MiniBox as MiniDetailBox } from './components/DetailBox';
 
-export { LunaCheckoutWidget, IFrameBox };
+export { CheckoutWidget, DetailBox, MiniDetailBox };

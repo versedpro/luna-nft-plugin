@@ -1,59 +1,43 @@
-import React, { useState } from 'react';
-import { LunaCheckoutWidget } from '@sportigos/nft-checkout';
-// import { LunaCheckoutWidget } from './lib';
+import React from 'react';
+// import { CheckoutWidget } from '@sportigos/nft-checkout';
+import { CheckoutWidget } from 'luna-nft-checkout';
+import 'luna-nft-checkout/lib/esm/styles/style.css';
+// import { CheckoutWidget } from './lib';
+import Web3 from 'web3';
 import './App.css';
 
+import { Web3ReactProvider, useWeb3React } from '@web3-react/core';
+import { ethers } from 'ethers';
+
+// const getLibrary = (provider: any): ethers.providers.Web3Provider => {
+//   const library = new ethers.providers.Web3Provider(provider);
+//   library.pollingInterval = 8000;
+//   return library;
+// };
+
+function getLibrary(provider: any) {
+  return new Web3(provider);
+}
+
 function App() {
-    const [collectionId, setCollectionId] = useState<string>('c2c439fd-ed51-456b-b110-a12c577454b2');
-    const [apiKey, setApiKey] = useState<string>('x3QcM7Ic4u0TBbWS6no0h');
-    const [secretKey, setSecretKey] = useState<string>('CXSCC0BIkvFOB2GdWj6a8bvWBF3HOFQu');
-
-    const [params, setParams] = useState<{ collectionId: string; apiKey: string; secretKey: string }>({
-        collectionId: 'c2c439fd-ed51-456b-b110-a12c577454b2',
-        apiKey: 'x3QcM7Ic4u0TBbWS6no0h',
-        secretKey: 'CXSCC0BIkvFOB2GdWj6a8bvWBF3HOFQu'
-    });
-
-    const onUpdate = () => {
-        setParams({ collectionId, apiKey, secretKey });
-    };
-
-    return (
-        <div className="App">
-            <div style={{ display: 'flex', flexDirection: 'row', gap: 12, margin: '12px 0' }}>
-                <div>
-                    <span>CollectionID: </span>
-                    <input
-                        value={collectionId}
-                        style={{ width: 280, height: 24 }}
-                        onChange={(event) => setCollectionId(event.target.value)}
-                    />
-                </div>
-                <div>
-                    <span>API Key: </span>
-                    <input
-                        value={apiKey}
-                        style={{ width: 200, height: 24 }}
-                        onChange={(event) => setApiKey(event.target.value)}
-                    />
-                </div>
-                <div>
-                    <span>Secret Key: </span>
-                    <input
-                        value={secretKey}
-                        style={{ width: 280, height: 24 }}
-                        onChange={(event) => setSecretKey(event.target.value)}
-                    />
-                </div>
-                <button onClick={onUpdate}>Update</button>
-            </div>
-            <LunaCheckoutWidget
-                collectionId={params.collectionId}
-                username={params.apiKey}
-                password={params.secretKey}
-            />
-        </div>
-    );
+  return (
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <h1 className="flex justify-center my-5">Single NFT</h1>
+      <div>
+        <CheckoutWidget collectionId="c091b03f-b366-4729-ba99-359ae4a45366" libraryType="web3" view="normal" />
+      </div>
+      <div className="mt-10">
+        <CheckoutWidget collectionId="c091b03f-b366-4729-ba99-359ae4a45366" libraryType="web3" view="mini" />
+      </div>
+      <h1 className="flex justify-center my-5">Multiple NFT</h1>
+      <div>
+        <CheckoutWidget collectionId="da3b4ebc-ceb9-4693-9418-98024056b666" libraryType="web3" view="normal" />
+      </div>
+      <div className="mt-10">
+        <CheckoutWidget collectionId="da3b4ebc-ceb9-4693-9418-98024056b666" libraryType="web3" view="mini" />
+      </div>
+    </Web3ReactProvider>
+  );
 }
 
 export default App;
