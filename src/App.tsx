@@ -22,8 +22,19 @@ function getLibrary(provider: any) {
 function App() {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
-      <div className="App">
-        <CheckoutWidget collectionId="ef7e2df4-3b2b-409e-8a78-35dd845fd8d4" libraryType="web3" />
+      <h1 className="flex justify-center my-5">Single NFT</h1>
+      <div>
+        <CheckoutWidget collectionId="c091b03f-b366-4729-ba99-359ae4a45366" libraryType="web3" view="normal" />
+      </div>
+      <div className="mt-10">
+        <CheckoutWidget collectionId="c091b03f-b366-4729-ba99-359ae4a45366" libraryType="web3" view="mini" />
+      </div>
+      <h1 className="flex justify-center my-5">Multiple NFT</h1>
+      <div>
+        <CheckoutWidget collectionId="da3b4ebc-ceb9-4693-9418-98024056b666" libraryType="web3" view="normal" />
+      </div>
+      <div className="mt-10">
+        <CheckoutWidget collectionId="da3b4ebc-ceb9-4693-9418-98024056b666" libraryType="web3" view="mini" />
       </div>
     </Web3ReactProvider>
   );
